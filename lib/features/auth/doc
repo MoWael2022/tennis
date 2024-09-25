@@ -1,0 +1,38 @@
+#Authentication
+- Sign In
+  user sign in using Email and password
+- Sign up
+  user sign up using user Name ,Email , Password and Confirm Password
+- logout
+  use can logout
+
+# data layer
+- data source
+  using remote data source using firebase
+  signIn ,Signup ,logout
+- model
+  user model contain user data returned from User credential when make login or register
+- repository
+  signInRepo , SignUpRepo , logoutRepo
+
+# domain layer
+- entities
+  userDataEntered : the data that user entered when make login(email ,password ) or register (email ,password ,username) it
+  contain UserDataEnteredForRegister and UserDataEnterForLogin ,UserDataEnterForLogin it extend from UserDataEnteredForRegister
+  userDataReturned : the data returned when make register or login
+- useCase
+  create use case for every function in authentication(sign in  ,sign up ,register )
+
+# presentation layer
+- controller
+  using cubit state management
+  create two objects from cubit one for return user data and the other for handle authentication state in sign in and sign up and logout
+- screens
+  splash screen
+  Sign Screen contain two button for login and register
+  sign in screen
+  sign up screen
+  profile screen
+
+
+
