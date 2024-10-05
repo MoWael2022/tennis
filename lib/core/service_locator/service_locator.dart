@@ -4,6 +4,10 @@ import 'package:weather_app/features/auth/data/remote_data_source/remote_authent
 import 'package:weather_app/features/auth/data/repository/authentication_repository.dart';
 import 'package:weather_app/features/auth/domin/repository/base_authentication_repository.dart';
 import 'package:weather_app/features/auth/domin/usecase/signIn_usecase.dart';
+import 'package:weather_app/features/home/data/remote_data_source/remote_data_source.dart';
+import 'package:weather_app/features/home/data/repository/home_repository.dart';
+import 'package:weather_app/features/home/domin/repository/base_repository.dart';
+import 'package:weather_app/features/home/domin/usecase/get_weather_data_usecase.dart';
 
 import '../../features/auth/domin/usecase/logout_usecase.dart';
 import '../../features/auth/domin/usecase/signup_usecase.dart';
@@ -26,5 +30,22 @@ class ServiceLocator {
     //data source auth
     instance.registerLazySingleton<BaseRemoteAuthenticationDataSource>(
         () => RemoteAuthenticationDataSource());
+
+
+
+
+
+
+
+
+
+    //home features
+    instance.registerLazySingleton<GetWeatherDataUseCase>(
+        () => GetWeatherDataUseCase(instance()));
+
+    instance.registerLazySingleton<BaseRepository>(
+        () => HomeRepository(instance()));
+    //data source auth
+    instance.registerLazySingleton<RemoteDataSource>(() => RemoteDataSource());
   }
 }

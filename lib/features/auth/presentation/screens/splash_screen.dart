@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:weather_app/core/constant/image_path_manager.dart';
 import 'package:weather_app/core/routers/routers.dart';
@@ -79,8 +80,14 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Padding(
                       padding: EdgeInsets.only(right: 5.w, bottom: 3.h),
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(Routers.signScreen);
+                        onPressed: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          bool isSignIn = prefs.getBool("isSignIn") ?? false;
+
+
+                          Navigator.of(context).pushNamed(!isSignIn
+                              ? Routers.signScreen
+                              : Routers.layoutPagesScreen);
                         },
                         child: const Text('Skip'),
                       ),
