@@ -33,12 +33,12 @@ class SignInScreen extends StatelessWidget {
             );
           } else if (state is LoadedState) {
             SharedPreferences prefs = await SharedPreferences.getInstance();
-
             prefs.setString("userName", state.user.username);
             prefs.setString("userId", state.user.uid);
             prefs.setString("Email", state.user.email);
+            prefs.setBool("isSignIn",true);
             Navigator.pop(context);
-            Navigator.of(context).pushReplacementNamed(Routers.profileScreen);
+            Navigator.of(context).pushReplacementNamed(Routers.layoutPagesScreen);
 
           } else if (state is ErrorState) {
             Navigator.pop(context);

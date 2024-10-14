@@ -11,7 +11,7 @@ plugins {
 android {
     namespace = "com.example.weather_app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "21.1.6352462"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,4 +44,14 @@ android {
 
 flutter {
     source = "../.."
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            if ((requested.group == "org.jetbrains.kotlin") && (requested.name.startsWith("kotlin-stdlib"))) {
+                useVersion("1.8.0")
+            }
+        }
+    }
 }
