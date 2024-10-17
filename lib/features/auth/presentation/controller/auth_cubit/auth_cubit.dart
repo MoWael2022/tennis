@@ -35,7 +35,6 @@ class AuthCubit extends Cubit<AuthState> {
           email: loginEmailTextBox.text, password: loginPasswordTextBox.text),
     );
     result.fold((l) {
-
       emit(ErrorState(l.message));
     }, (r) {
       loginEmailTextBox.clear();
@@ -70,9 +69,14 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LoadingState());
     final data = instance<LogoutUseCase>();
     final result = await data.call(const NoParameter());
+    SharedPreferences prefs =await SharedPreferences.getInstance();
     result.fold((l) {
       emit(ErrorState(l.message));
     }, (r) {
+      prefs.remove('isSignIn');
+      prefs.remove('userName');
+      prefs.remove('Email');
+      prefs.remove('userId');
       emit(LogoutLoadedState());
     });
 

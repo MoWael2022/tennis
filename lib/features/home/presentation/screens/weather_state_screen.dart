@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:weather_app/features/home/data/models/weather_data_model.dart';
 import 'package:weather_app/features/home/presentation/controller/google_map_cubit/google_map_cubit.dart';
 import 'package:weather_app/features/home/presentation/controller/weather_cubit/weather_cubit.dart';
 import 'package:weather_app/features/home/presentation/controller/weather_cubit/weather_state.dart';
+import 'package:weather_app/features/home/presentation/widgets/weather_details.dart';
+import 'package:weather_app/features/weather_detection/presentation/controller/get_prediction_cubit.dart';
 
+import '../../../../core/routers/routers.dart';
 import '../widgets/map_componenet.dart';
 
 class WeatherScreen extends StatelessWidget {
@@ -16,9 +20,13 @@ class WeatherScreen extends StatelessWidget {
     final weatherCubit = BlocProvider.of<WeatherCubit>(context);
     return Scaffold(
       backgroundColor: const Color(0xFF0B043F),
-
       body: SafeArea(
-        child: BlocBuilder<WeatherCubit, WeatherState>(
+        child: BlocConsumer<WeatherCubit, WeatherState>(
+          listener: (context ,state){
+            if(state is LoadedWeatherDataState){
+
+            }
+          },
           builder: (context, state) {
             if (state is LoadedWeatherDataState) {
               return ListView(
@@ -28,11 +36,37 @@ class WeatherScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          weatherCubit.currentWeatherData!.name,
-                          style: const TextStyle(
-                            fontSize: 32,
-                            color: Colors.white,
+                        SizedBox(
+                          width: 100.w,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                  right: 2.w,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routers.predictionPage);
+                                      BlocProvider.of<GetPredictionCubit>(
+                                              context)
+                                          .getPrediction(weatherCubit
+                                              .currentWeatherData!
+                                              .getWeatherFeatures());
+                                    },
+                                    color: Colors.white,
+                                    icon: const Icon(Icons.batch_prediction),
+                                  )),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  weatherCubit.currentWeatherData!.name,
+                                  style: const TextStyle(
+                                    fontSize: 32,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Text(
@@ -69,7 +103,9 @@ class WeatherScreen extends StatelessWidget {
                                 "${weatherCubit.currentWeatherData!.maxTemp} °C"),
                           ],
                         ),
-                        SizedBox(height: 2.h,),
+                        SizedBox(
+                          height: 2.h,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -220,23 +256,23 @@ class WeatherScreen extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: 1.h),
-                                  _buildWeatherDetail('Temperature:',
-                                      state.data.days[index].temp.toString()),
-                                  _buildWeatherDetail(
-                                      'Max Temp:',
-                                      state.data.days[index].maxTemp
+                                  BuildWeatherDetails(title: 'Temperature:',
+                                      value: state.data.days[index].temp.toString()),
+                                  BuildWeatherDetails(
+                                      title: 'Max Temp:',
+                                      value: state.data.days[index].maxTemp
                                           .toString()),
-                                  _buildWeatherDetail(
-                                      'Min Temp:',
-                                      state.data.days[index].minTemp
+                                  BuildWeatherDetails(
+                                      title: 'Min Temp:',
+                                      value: state.data.days[index].minTemp
                                           .toString()),
-                                  _buildWeatherDetail(
-                                      'Humidity:',
-                                      state.data.days[index].humidity
+                                  BuildWeatherDetails(
+                                      title: 'Humidity:',
+                                      value: state.data.days[index].humidity
                                           .toString()),
-                                  _buildWeatherDetail(
-                                      'Wind Speed:',
-                                      state.data.days[index].windSpeed
+                                  BuildWeatherDetails(
+                                      title: 'Wind Speed:',
+                                      value: state.data.days[index].windSpeed
                                           .toString()),
                                 ],
                               ),
@@ -256,29 +292,6 @@ class WeatherScreen extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-
-  Widget _buildWeatherDetail(String title, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 17.sp,
-            color: Colors.white54,
-          ),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 17.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ],
     );
   }
 

@@ -6,8 +6,8 @@ import 'package:weather_app/features/auth/presentation/screens/splash_screen.dar
 import 'package:weather_app/features/home/presentation/screens/home_screen.dart';
 import 'package:weather_app/features/home/presentation/screens/page_layout.dart';
 import 'package:weather_app/features/home/presentation/screens/weather_state_screen.dart';
-
 import '../../features/auth/presentation/screens/profile.dart';
+import '../../features/weather_detection/presentation/screens/predection_screen.dart';
 
 class Routers {
   static const String splashScreen = '/';
@@ -18,6 +18,7 @@ class Routers {
   static const String homeScreen = '/home';
   static const String weatherScreen = '/weather';
   static const String layoutPagesScreen = '/layout';
+  static const String predictionPage = '/predictionPage';
 }
 
 class RouteGenerator {
@@ -34,11 +35,13 @@ class RouteGenerator {
       case Routers.profileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
       case Routers.homeScreen:
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        return MaterialPageRoute(builder: (context) => HomeScreen());
       case Routers.weatherScreen:
         return MaterialPageRoute(builder: (context) =>const WeatherScreen());
       case Routers.layoutPagesScreen:
         return MaterialPageRoute(builder: (context) =>const PageLayout());
+      case Routers.predictionPage:
+        return MaterialPageRoute(builder: (context) =>const PredictionScreen());
       default:
         return unDefinedRoute();
     }

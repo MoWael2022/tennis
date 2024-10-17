@@ -1,0 +1,31 @@
+#weather detection
+    - This feature is responsible for utilizing an AI model to predict whether the weather is suitable for playing tennis or not.
+
+  #data layer
+    - data source
+      Use Flask with a local server to connect to the AI model. Pass WeatherPredictionDataEnter to the
+      model and return WeatherPredictionDataReturned.
+    - model
+      WeatherPredictionDataReturned: This class is responsible for converting the returned JSON into a prediction result.
+      It contains the prediction number (1 or 0), where 1 means suitable for tennis, and 0 means not suitable.
+    - repository
+      Fetch the prediction data by connecting to the Flask-based AI model.
+
+  #domin layer
+    - Entities
+      WeatherPredictionDataEnter: A list that represents the weather state and contains a toJson method for serialization.
+      WeatherPredictionDataReturned: Holds the prediction result.
+    - useCase
+      GetPredictionUseCase: A use case for fetching the prediction data.
+
+  #presentation layer
+    - controller
+        GetPredictionCubit: Contains all the functions necessary to handle weather predictions in the app.
+            - getPrediction(): Fetch the weather prediction.
+
+    -screens
+        PredictionScreen: A page that displays whether the weather is suitable for playing tennis, based on the prediction (good or bad).
+
+
+
+

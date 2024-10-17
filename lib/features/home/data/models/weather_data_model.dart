@@ -17,7 +17,13 @@ class WeatherDataModel extends WeatherData {
       required super.longitude,
       required super.humidity,
       required super.windMph,
-      required super.windDir});
+      required super.windDir,
+      required super.dailyWillItRain,
+      required super.dailyChanceOfRain,
+      required super.precipitationAmountMillimeters,
+      required super.cloud,
+      required super.avgHumidity,
+      required super.avgTemp});
 
   factory WeatherDataModel.fromJson(Map<String, dynamic> json) {
     return WeatherDataModel(
@@ -39,6 +45,14 @@ class WeatherDataModel extends WeatherData {
       days: (json['forecast']['forecastday'] as List)
           .map((i) => DaysDataModel.fromJson(i))
           .toList(),
+      dailyWillItRain: json['forecast']['forecastday'][0]['daily_will_it_rain']??0,
+      dailyChanceOfRain: json['forecast']['forecastday'][0]
+          ['daily_chance_of_rain']??0,
+      avgHumidity: json['forecast']['forecastday'][0]['day']['avghumidity'],
+      cloud: json['current']['cloud'],
+      precipitationAmountMillimeters: json['forecast']['forecastday'][0]['day']
+          ['totalprecip_mm'],
+      avgTemp: json['forecast']['forecastday'][0]['day']['avgtemp_c'],
     );
   }
 }

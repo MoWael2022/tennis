@@ -10,6 +10,10 @@ class HoursData extends Equatable {
 
   final String _conditionImage;
 
+  final int willItRain;
+
+  final int chanceOfRain;
+
   String get conditionImage => _conditionImage.startsWith('https:')
       ? _conditionImage
       : 'https:$_conditionImage';
@@ -20,7 +24,9 @@ class HoursData extends Equatable {
   }
 
   const HoursData(
-      {required this.temp,
+      {required this.willItRain,
+      required this.chanceOfRain,
+      required this.temp,
       required this.condition,
       required String conditionImage,
       required String time})

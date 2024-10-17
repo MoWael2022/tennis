@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:weather_app/features/auth/presentation/controller/auth_cubit/auth_cubit.dart';
 import 'package:weather_app/features/auth/presentation/controller/user_cubit/user_cubit.dart';
 import 'package:weather_app/features/home/presentation/controller/weather_cubit/weather_cubit.dart';
+import 'package:weather_app/features/weather_detection/presentation/controller/get_prediction_cubit.dart';
 
 import '../../features/home/presentation/controller/google_map_cubit/google_map_cubit.dart';
 import '../routers/routers.dart';
@@ -19,8 +20,9 @@ class WeatherApp extends StatelessWidget {
         BlocProvider(create: (context) => GoogleMapCubit()),
         BlocProvider(create: (context) => UserCubit()),
         BlocProvider(create: (context) => WeatherCubit()),
+        BlocProvider(create: (context) => GetPredictionCubit()),
       ],
-      child: ResponsiveSizer(builder: (context, orientation, child) {
+      child: Sizer(builder: (context, orientation, child) {
         return const MaterialApp(
           initialRoute: Routers.splashScreen,
           debugShowCheckedModeBanner: false,
