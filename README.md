@@ -82,10 +82,8 @@ This Flutter application allows users to check the weather for different locatio
 
 ## Video Demo
 
-<video width="640" height="360" controls>
-  <source src="assets/video/demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+https://github.com/user-attachments/assets/320291eb-7658-4d79-a793-0c5af6fdb9bd
 
 ---
 
