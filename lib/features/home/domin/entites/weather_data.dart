@@ -19,6 +19,13 @@ class WeatherData extends Equatable {
   final String windDir;
   final String _time;
 
+  final double avgTemp;
+  final int dailyWillItRain;
+  final int dailyChanceOfRain;
+  final double precipitationAmountMillimeters;
+  final int cloud;
+  final int avgHumidity;
+
   String get conditionImage => _conditionImage.startsWith('https:')
       ? _conditionImage
       : 'https:$_conditionImage';
@@ -33,8 +40,24 @@ class WeatherData extends Equatable {
     return DateFormat("HH:mm").format(dateTime);
   }
 
+  List<int> getWeatherFeatures() {
+    return [
+      (dailyWillItRain == 1 && dailyChanceOfRain > 50 && precipitationAmountMillimeters > 0) ? 1 : 0,
+      cloud < 20 ? 1 : 0,
+      avgTemp > 25 ? 1 : 0,
+      (avgTemp > 20 && avgTemp < 30) ? 1 : 0,
+      (avgHumidity > 30 && avgHumidity < 60) ? 1 : 0
+    ];
+  }
+
   const WeatherData(
-      {required this.latitude,
+      {required this.avgTemp,
+      required this.dailyWillItRain,
+      required this.dailyChanceOfRain,
+      required this.precipitationAmountMillimeters,
+      required this.cloud,
+      required this.avgHumidity,
+      required this.latitude,
       required this.longitude,
       required this.humidity,
       required this.windMph,

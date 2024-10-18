@@ -11,14 +11,9 @@ import 'package:weather_app/features/home/presentation/widgets/map_componenet.da
 
 import '../../../auth/presentation/controller/user_cubit/user_cubit.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   double opacity = 0;
 
   @override
@@ -101,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     country = googleMapCubit.searchController.text;
                   }
                   weatherCubit.getWeatherData(country);
-
                 },
                 child: const Text("Check Weather"),
               ),
@@ -111,13 +105,18 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocConsumer<WeatherCubit, WeatherState>(listener: (context, state) {
             if (state is LoadingWeatherDataState) {
               opacity = 0;
-
             } else if (state is LoadedWeatherDataState) {
               opacity = 1;
             }
           }, builder: (context, state) {
             if (state is LoadingWeatherDataState) {
-              return const CircularProgressIndicator();
+              return  SizedBox(
+                height: 3.h,
+                width: 3.h,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
             } else if (state is LoadedWeatherDataState) {
               return Center(
                 child: Column(
@@ -125,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                         height: 26.h,
                         child: TweenAnimationBuilder(
-                          duration:const Duration(milliseconds: 1000),
+                          duration: const Duration(milliseconds: 1000),
                           curve: Curves.easeInQuart,
                           tween: Tween(begin: 0.0, end: 1.0),
                           builder: (context, opacity, child) {
@@ -138,13 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.all(15.sp),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            weatherCubit.currentWeatherData!.name,
+                                            weatherCubit
+                                                .currentWeatherData!.name,
                                             style: TextStyle(
                                               color: Colors.blue.shade900,
                                               fontSize: 26.sp,
@@ -152,7 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Image.network(
-                                            weatherCubit.currentWeatherData!.conditionImage,
+                                            weatherCubit.currentWeatherData!
+                                                .conditionImage,
                                             width: 15.w,
                                             height: 20.sp,
                                             fit: BoxFit.cover,
@@ -161,7 +164,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       SizedBox(height: 10.sp),
                                       Text(
-                                        weatherCubit.currentWeatherData!.temp.toString(),
+                                        weatherCubit.currentWeatherData!.temp
+                                            .toString(),
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 22.sp,
@@ -170,10 +174,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       SizedBox(height: 5.sp),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            weatherCubit.currentWeatherData!.condition,
+                                            weatherCubit
+                                                .currentWeatherData!.condition,
                                             style: TextStyle(
                                               color: Colors.grey.shade700,
                                               fontSize: 20.sp,
@@ -181,17 +187,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           ElevatedButton(
                                             onPressed: () {
-                                              navigation.pushNamed(Routers.weatherScreen);
+                                              navigation.pushNamed(
+                                                  Routers.weatherScreen);
+                                              weatherCubit.getCurrentTime(state.data);
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 20.sp),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10.sp,
+                                                  horizontal: 20.sp),
                                             ),
                                             child: const Text("Know More"),
                                           ),
                                         ],
                                       ),
                                       SizedBox(height: 15.sp),
-
                                     ],
                                   ),
                                 ),

@@ -12,7 +12,7 @@ class PageLayout extends StatefulWidget {
 
 class _PageLayoutState extends State<PageLayout> {
   int _currentIndex = 1;
-  List<Widget> screens = [const ProfileScreen(), const HomeScreen()];
+  List<Widget> screens = [const ProfileScreen(), HomeScreen()];
 
   @override
   Widget build(BuildContext context) {

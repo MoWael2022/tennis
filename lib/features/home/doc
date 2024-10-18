@@ -1,0 +1,42 @@
+#Home
+    - The user can check the weather and get their current location. If the location is null or the user has turned off
+      location services on their mobile, Alexandria will be set as the default location.
+    - The user can also manually enter a country name to check its weather.
+
+  #data layer
+    - data source
+      Use the weather API to fetch weather data based on the country name. Return the data as a WeatherDataModel object.
+    - model
+      - weatherDataModel: Class that contains all the weather-related data returned from the JSON response.
+      - hoursDataModel:Class that contains hourly weather data from the JSON response.
+      - daysDataModel:Class that contains daily weather data from the JSON response.
+    - repository
+      Fetches weather data from the data source.
+
+  #domin layer
+    - Entities
+      - DayData: Entity representing daily weather data.
+      - HoursData: Entity representing hourly weather data.
+      - WeatherData: Entity representing the complete weather data.
+    - useCase
+      - Create a base UseCase class for all use cases.
+      - GetWeatherDataUseCase: A specific use case for fetching weather data.
+
+  #presentation layer
+    - Controller
+       GoogleMapCubit: Handles geolocation-related functionality in the app.
+            - getCurrentLocation(): Fetch the user's current location.
+            - checkServiceLocation(): Ensure that the location service in the app is turned on.
+            - searchLocation(): Search for a specific country and navigate to it.
+            - getCurrentCountryName(): Get the country name based on latitude and longitude.
+            - getWeatherStateMarker(): Retrieve the weather state image and assign it to the location marker.
+        weatherCubit : contain all functions to handle the weather state in the app
+            - getWeatherData(): Fetch weather data from the API.
+            - getCurrentTime(): Get the current time and use it to scroll to the relevant time slot in the weather state screen.
+    -screens
+        HomeScreen: A page that contains a search bar for searching a country and displays brief weather information.
+        PageLayout: The main page layout for navigating between the home and profile screens.
+        WeatherStateScreen: A page that displays detailed weather data for the selected country.
+
+
+

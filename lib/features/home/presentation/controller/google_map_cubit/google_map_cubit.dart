@@ -65,6 +65,9 @@ class GoogleMapCubit extends Cubit<GoogleMapState> {
     if (per == LocationPermission.denied) {
       Geolocator.requestPermission();
     }
+    if(serviceLocation) {
+      emit(CheckLocationState());
+    }
   }
 
   Future<void> searchLocation(String place) async {

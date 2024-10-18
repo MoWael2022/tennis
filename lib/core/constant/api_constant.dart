@@ -4,4 +4,6 @@ class Constant {
 
   static String getWeatherData(String countryName) =>
       "$_baseUrl/forecast.json?q=$countryName&days=7&key=$_apikey";
+
+  static const String predictionUrl = "http://192.168.123.129:5001/predict";
 }

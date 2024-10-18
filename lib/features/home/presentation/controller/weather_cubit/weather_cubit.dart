@@ -20,17 +20,19 @@ class WeatherCubit extends Cubit<WeatherState>{
     data.fold((l){
       emit(ErrorWeatherDataState(l.message));
     }, (r){
-      int currentTimeIndex = r.hours.indexWhere(
-            (hour) => hour.time.substring(0, 2) == r.formattedTime.substring(0, 2),
-      );
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (currentTimeIndex != -1) {
-          double offset = (currentTimeIndex * 27.w) - (100.w / 2) + (27.w / 2);
-          scrollController.jumpTo(offset);
-        }
-      });
       emit(LoadedWeatherDataState(r));
     });
   }
 
+  getCurrentTime(WeatherData data){
+    int currentTimeIndex = data.hours.indexWhere(
+          (hour) => hour.time.substring(0, 2) == data.formattedTime.substring(0, 2),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (currentTimeIndex != -1) {
+        double offset = (currentTimeIndex * 27.w) - (100.w / 2) + (27.w / 2);
+        scrollController.jumpTo(offset);
+      }
+    });
+  }
 }

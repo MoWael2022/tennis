@@ -8,3 +8,5 @@ class LoadedMarkerState extends GoogleMapState{
   Set<Marker> markers ={};
   LoadedMarkerState(this.markers);
 }
+
+class CheckLocationState extends GoogleMapState{}
